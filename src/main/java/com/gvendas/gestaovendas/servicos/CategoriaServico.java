@@ -19,6 +19,7 @@ public class CategoriaServico {
 	private CategoriaRepositorio categoriaRepositorio;
 
 	public List<Categoria> listarTodasCategorias() {
+
 		return categoriaRepositorio.findAll();
 	}
 

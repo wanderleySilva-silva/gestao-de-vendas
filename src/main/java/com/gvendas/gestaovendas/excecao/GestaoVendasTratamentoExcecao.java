@@ -68,7 +68,7 @@ public class GestaoVendasTratamentoExcecao extends ResponseEntityExceptionHandle
 
 		List<Erro> erros = new ArrayList<Erro>();
 
-		bindingResult.getAllErrors().forEach(fieldError -> {
+		bindingResult.getFieldErrors().forEach(fieldError -> {
 			String msgUsuario = tratarMensagemDeErroParaUsuario(fieldError);
 			String msgDesenvolvedor = fieldError.toString();
 

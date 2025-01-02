@@ -2,6 +2,7 @@ package com.gvendas.gestaovendas.controladores;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gvendas.gestaovendas.dto.produto.ProdutoRequestDTO;
+import com.gvendas.gestaovendas.dto.produto.ProdutoResponseDTO;
 import com.gvendas.gestaovendas.entidades.Produto;
 import com.gvendas.gestaovendas.servicos.ProdutoServico;
 
@@ -33,32 +36,38 @@ public class ProdutoControlador {
 
 	@Operation(summary = "Listar")
 	@GetMapping
-	public List<Produto> listarTodas(@PathVariable Long codigoCategoria) {
-		return produtoServico.listarTodos(codigoCategoria);
+	public List<ProdutoResponseDTO> listarTodas(@PathVariable Long codigoCategoria) {
+
+		return produtoServico.listarTodos(codigoCategoria).stream()
+				.map(produto -> ProdutoResponseDTO.converterProdutoParaProdutoResponseDto(produto))
+				.collect(Collectors.toList());
 	}
 
 	@Operation(summary = "Listar por código")
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Optional<Produto>> buscarPorCodigo(@PathVariable Long codigo,
+	public ResponseEntity<ProdutoResponseDTO> buscarPorCodigo(@PathVariable Long codigo,
 			@PathVariable Long codigoCategoria) {
 		Optional<Produto> produto = produtoServico.buscarPorCodigo(codigo, codigoCategoria);
 
-		return produto.isPresent() ? ResponseEntity.ok(produto) : ResponseEntity.notFound().build();
+		return produto.isPresent() ? ResponseEntity.ok(ProdutoResponseDTO.converterProdutoParaProdutoResponseDto(produto.get())) : ResponseEntity.notFound().build();
 	}
-	
+
 	@Operation(summary = "Salvar")
 	@PostMapping
-	public ResponseEntity<Produto> salvarProduto(@PathVariable Long codigoCategoria, @Valid @RequestBody Produto produto){
-		Produto produtoSalvo = produtoServico.salvarProduto(codigoCategoria, produto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
+	public ResponseEntity<ProdutoResponseDTO> salvarProduto(@PathVariable Long codigoCategoria,
+			@Valid @RequestBody ProdutoRequestDTO produto) {
+		Produto produtoSalvo = produtoServico.salvarProduto(codigoCategoria, produto.converterParaEntidade(codigoCategoria));
+		return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoResponseDTO.converterProdutoParaProdutoResponseDto(produtoSalvo));
 	}
-	
+
 	@Operation(summary = "Atualizar")
 	@PutMapping("/{codigoProduto}")
-	public ResponseEntity<Produto> atualizarProduto(@PathVariable Long codigoCategoria, @PathVariable Long codigoProduto, @Valid @RequestBody Produto produto){
-		Produto produtoAtualizado = produtoServico.atualizarProduto(codigoCategoria, codigoProduto, produto);
-		return ResponseEntity.ok(produtoAtualizado);
+	public ResponseEntity<ProdutoResponseDTO> atualizarProduto(@PathVariable Long codigoCategoria,
+			@PathVariable Long codigoProduto, @Valid @RequestBody ProdutoRequestDTO produto) {
+		Produto produtoAtualizado = produtoServico.atualizarProduto(codigoCategoria, codigoProduto, produto.converterParaEntidade(codigoCategoria, codigoProduto));
+		return ResponseEntity.ok(ProdutoResponseDTO.converterProdutoParaProdutoResponseDto(produtoAtualizado));
 	}
+
 	@Operation(summary = "Deletar")
 	@DeleteMapping("/{codigoProduto}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
