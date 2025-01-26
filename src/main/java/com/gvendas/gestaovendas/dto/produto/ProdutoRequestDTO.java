@@ -18,24 +18,24 @@ import lombok.Setter;
 @Schema(description = "Produto requisição DTO", name = "Produto requisição DTO")
 public class ProdutoRequestDTO {
 	
-	@Schema(name = "Descrição")
+	@Schema(description = "Descrição")
 	@NotBlank(message = "Descrição")
 	@Length(min = 3, max = 100, message = "Descrição")
 	private String descricao;
 
-	@Schema(name = "Quantidade")
+	@Schema(description = "Quantidade")
 	@NotNull(message = "Quantidade")
 	private Integer quantidade;
 
-	@Schema(name = "Preço Custo")
+	@Schema(description =  "Preço Custo")
 	@NotNull(message = "Preço custo")
 	private BigDecimal precoCusto;
 
-	@Schema(name = "Preço Venda")
+	@Schema(description = "Preço Venda")
 	@NotNull(message = "Preço venda")
 	private BigDecimal precoVenda;
 
-	@Schema(name = "Observação")
+	@Schema(description = "Observação")
 	@Length(max = 500, message = "Observação")
 	private String observacao;
 	
