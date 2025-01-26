@@ -37,7 +37,7 @@ public class ItemVenda {
 	private Produto produto;
 
 	@ManyToOne
-	@JoinColumn(name = "tb_produto_codigo", referencedColumnName = "codigo")
+	@JoinColumn(name = "tb_venda_codigo", referencedColumnName = "codigo")
 	private Venda venda;
 	
 	public ItemVenda() {
