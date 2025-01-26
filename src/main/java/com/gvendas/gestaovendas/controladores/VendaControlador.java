@@ -26,4 +26,10 @@ public class VendaControlador {
 	public ResponseEntity<ClienteVendaResponseDTO> listarVendasPorCliente(@PathVariable Long codigoCliente){
 		return ResponseEntity.ok(vendaServico.listaVendaPorCliente(codigoCliente));
 	}
+	
+	@Operation(summary = "Listar vendas por código")
+	@GetMapping("/{codigoVenda}")
+	public ResponseEntity<ClienteVendaResponseDTO> listarVendaPorCodigo(@PathVariable Long codigoVenda){
+		return ResponseEntity.ok(vendaServico.listarVendaPorCodigo(codigoVenda));
+	}
 }
