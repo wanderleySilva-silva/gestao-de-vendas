@@ -48,6 +48,10 @@ public class Produto {
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
 	private Categoria categoria;
+	
+	public Produto(Long codigo) {
+		this.codigo = codigo;
+	}
 
 	public Produto(String descricao, Integer quantidade, BigDecimal precoCusto, BigDecimal precoVenda,
 			String observacao, Categoria categoria) {

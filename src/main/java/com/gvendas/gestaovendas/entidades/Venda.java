@@ -10,10 +10,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+@AllArgsConstructor
 @EqualsAndHashCode
 @Getter
 @Setter
@@ -32,5 +34,14 @@ public class Venda {
 	@ManyToOne
 	@JoinColumn(name = "tb_cliente_codigo", referencedColumnName = "codigo")
 	private Cliente cliente;
+	
+	public Venda() {
+		
+	}
+
+	public Venda(LocalDate data, Cliente cliente) {
+		this.data = data;
+		this.cliente = cliente;
+	}
 
 }
