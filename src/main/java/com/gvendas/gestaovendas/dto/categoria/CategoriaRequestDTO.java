@@ -20,7 +20,7 @@ public class CategoriaRequestDTO {
 	
 	@NotBlank(message = "Nome")
 	@Length(min = 3, max = 50, message = "Nome")
-	@Schema(name = "Nome")
+	@Schema(description = "Nome")
 	private String nome;
 	
 	public Categoria converterParaEntidade() {
