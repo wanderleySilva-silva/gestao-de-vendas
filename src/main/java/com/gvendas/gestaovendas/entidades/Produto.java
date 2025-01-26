@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "produto")
+@Table(name = "tb_produto")
 public class Produto {
 
 	@Id
